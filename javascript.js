@@ -13,24 +13,35 @@ function computerPlay() {
     }
 }
 
-function playRound (playerSelection, computerSelection) {
-    if (playerSelection == computerSelection) {
+function playRound (playerChoice, computerSelection) {
+    if (playerChoice == computerSelection) {
         // If the selections are the same, return a draw
-        console.log(computerSelection)
-        console.log(playerSelection)
-        return "draw"
-    } else if ( (playerSelection == "rock" && computerSelection == "scissors") || 
-                (playerSelection == "scissors" && computerSelection == "paper") ||
-                (playerSelection == "paper" && computerSelection == "rock") ) {
+        console.log("draw " + playerChoice + " ties with " + computerSelection);
+    } else if ( (playerChoice == "rock" && computerSelection == "scissors") || 
+                (playerChoice == "scissors" && computerSelection == "paper") ||
+                (playerChoice == "paper" && computerSelection == "rock") ) {
         // If the selections are a win for the player
-        return "win"
+        console.log("win " + playerChoice + " beats " + computerSelection)
     } else {
         // If the selections are a loss for the player
-        return "lose"
+        console.log("lose " + computerSelection + " beats " + playerChoice)
     }
 }
 
+function game () {
+    for (let i = 0; i < 5; i++){
+        playerSelection()
+        computerSelection = computerPlay()
+        playRound(playerChoice, computerSelection)
+    }
+}
+
+function playerSelection () {
+    // Update the player selection
+    playerChoice = prompt("Please select Rock, Paper or Scissors: ").toLowerCase();
+}
+
 // Get input from the user to select rock, paper or scissors and change it to lowercase
-const playerSelection = prompt("Please select Rock, Paper or Scissors: ").toLowerCase();
+let playerChoice = prompt("Please select Rock, Paper or Scissors: ").toLowerCase();
 // Use the computerplay function to randomly select the computer choice
-const computerSelection = computerPlay();
+let computerSelection = computerPlay();

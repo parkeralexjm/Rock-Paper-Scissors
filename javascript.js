@@ -13,35 +13,73 @@ function computerPlay() {
     }
 }
 
+const container = document.querySelector('#container');
+
 function playRound (playerChoice, computerSelection) {
     if (playerChoice == computerSelection) {
         // If the selections are the same, return a draw
-        console.log("draw " + playerChoice + " ties with " + computerSelection);
+        const draw = document.createElement('div');
+        draw.textContent =  ("You draw! " + playerChoice + " ties with " + computerSelection + 
+        ". Player: " + playerScore + " Computer: " + computerScore);
+        container.appendChild(draw);
     } else if ( (playerChoice == "rock" && computerSelection == "scissors") || 
                 (playerChoice == "scissors" && computerSelection == "paper") ||
                 (playerChoice == "paper" && computerSelection == "rock") ) {
         // If the selections are a win for the player
-        console.log("win " + playerChoice + " beats " + computerSelection)
+        playerScore ++;
+        const win = document.createElement('div');
+        win.textContent =  ("You win! " + playerChoice + " beats " + computerSelection + 
+        ". Player: " + playerScore + " Computer: " + computerScore);
+        container.appendChild(win);
     } else {
         // If the selections are a loss for the player
-        console.log("lose " + computerSelection + " beats " + playerChoice)
+        computerScore++;
+        const lose = document.createElement('div');
+        lose.textContent =  ("You lose! " + computerSelection + " beats " + playerChoice + 
+        ". Player: " + playerScore + " Computer: " + computerScore);
+        container.appendChild(lose);
+    }
+    if (playerScore == 5){
+        const winner = document.createElement('div');
+        winner.textContent =  ("You're the winner!");
+        container.appendChild(winner);
+    }
+    if (computerScore == 5){
+        const loser = document.createElement('div');
+        loser.textContent =  ("You're the loser!");
+        container.appendChild(loser);
     }
 }
 
 function game () {
-    for (let i = 0; i < 5; i++){
         playerSelection()
         computerSelection = computerPlay()
         playRound(playerChoice, computerSelection)
-    }
+    
 }
+
+// buttons is a node list. It looks and acts much like an array.
+const buttons = document.querySelectorAll('button');
+
+// we use the .forEach method to iterate through each button
+buttons.forEach((button) => {
+
+  // and for each one we add a 'click' listener
+  button.addEventListener('click', () => {
+    playerChoice = button.id;
+    playRound(playerChoice, computerPlay())
+  });
+});
 
 function playerSelection () {
     // Update the player selection
-    playerChoice = prompt("Please select Rock, Paper or Scissors: ").toLowerCase();
+   playerChoice = buttons.id;
 }
 
 // Get input from the user to select rock, paper or scissors and change it to lowercase
-let playerChoice = prompt("Please select Rock, Paper or Scissors: ").toLowerCase();
+let playerChoice;
 // Use the computerplay function to randomly select the computer choice
 let computerSelection = computerPlay();
+
+let computerScore = 0;
+let playerScore = 0;
